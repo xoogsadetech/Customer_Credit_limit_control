@@ -10,7 +10,7 @@
                 <page string="Credit Limit">
                     <group>
                         <field name="credit_limit_enforce"/>
-                        <field name="credit_limit_include_uninvoiced_sales" attrs="{'invisible': [('credit_limit_enforce','=',False)]}"/>
+                        <field name="credit_limit_include_uninvoiced_sales" invisible="not credit_limit_enforce"/>
                     </group>
                 </page>
             </xpath>

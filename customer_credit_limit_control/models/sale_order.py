@@ -5,12 +5,6 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    credit_limit_warning_message = fields.Char(
-        string="Credit Limit Warning",
-        compute="_compute_credit_limit_warning_message",
-        store=False,
-    )
-
     def _credit_limit_delta_company_currency(self):
         self.ensure_one()
         company = self.company_id
@@ -24,14 +18,26 @@ class SaleOrder(models.Model):
             self.date_order or fields.Date.context_today(self),
         )
 
-    @api.depends('partner_id', 'amount_total')
-    def _compute_credit_limit_warning_message(self):
-        for order in self:
-            warning = order._credit_limit_check()
-            if warning and isinstance(warning, dict) and warning.get("warning"):
-                order.credit_limit_warning_message = warning["warning"]
-            else:
-                order.credit_limit_warning_message = False
+        credit_limit_warning_message = fields.Char(
+            string="Credit Limit Warning",
+            compute="_compute_credit_limit_warning_message",
+            store=False,
+        )
+
+        @api.depends('partner_id', 'amount_total')
+        def _compute_credit_limit_warning_message(self):
+            for order in self:
+                warning = order._credit_limit_check()
+                if warning and isinstance(warning, dict) and warning.get("warning"):
+                    order.credit_limit_warning_message = warning["warning"]
+                else:
+                    order.credit_limit_warning_message = False
+        self.ensure_one()
+        partner = self.partner_id.commercial_partner_id
+        company = self.company_id
+
+        if not partner._credit_limit_is_enforced(company=company):
+            return None
 
         if self.env.user.has_group("customer_credit_limit_control.group_credit_limit_manager"):
             return None
