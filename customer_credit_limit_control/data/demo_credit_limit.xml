@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Customers with Credit Limits -->
+    <record id="res_partner_demo_credit_block" model="res.partner">
+        <field name="name">Demo Customer Block</field>
+        <field name="company_type">person</field>
+        <field name="credit_limit">1000</field>
+        <field name="credit_limit_policy">block</field>
+        <field name="customer_rank">1</field>
+    </record>
+    <record id="res_partner_demo_credit_warn" model="res.partner">
+        <field name="name">Demo Customer Warn</field>
+        <field name="company_type">company</field>
+        <field name="credit_limit">5000</field>
+        <field name="credit_limit_policy">warn</field>
+        <field name="customer_rank">1</field>
+    </record>
+    <!-- Demo Company Settings -->
+    <record id="res_company_demo_credit_limit" model="res.company">
+        <field name="name">Demo Company Credit Limit</field>
+        <field name="credit_limit_enforce">1</field>
+        <field name="credit_limit_include_uninvoiced_sales">1</field>
+    </record>
+</odoo>

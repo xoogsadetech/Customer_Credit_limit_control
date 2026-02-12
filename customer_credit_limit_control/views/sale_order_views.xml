@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit sale.order form to show credit limit warning banner -->
+    <record id="view_order_form_credit_limit_banner" model="ir.ui.view">
+        <field name="name">sale.order.form.credit.limit.banner</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div attrs="{'invisible': [('credit_limit_warning_message','=',False)]}" class="alert alert-warning" style="margin-bottom:16px;">
+                    <field name="credit_limit_warning_message" readonly="1" nolabel="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

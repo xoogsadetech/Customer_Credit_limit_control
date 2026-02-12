@@ -1,0 +1,47 @@
+Customer Credit Limit Control - User Tutorial
+============================================
+
+1. Enable Credit Limit Control
+-----------------------------
+- Go to Settings > Companies > (select your company).
+- Open the "Credit Limit" page.
+- Enable "Enforce Customer Credit Limits".
+- (Optional) Enable "Include Uninvoiced Sales" to include confirmed, not fully invoiced Sales Orders in the exposure.
+- Save.
+
+2. Set Credit Limit for a Customer
+----------------------------------
+- Go to Contacts > Customers.
+- Open the customer you want to control.
+- Go to the "Accounting" tab.
+- In the "Credit Limit" section:
+    - Set the "Credit Limit" amount (0 disables enforcement for this customer).
+    - Choose the "Credit Limit Policy":
+        - Block: Prevents Sales Order confirmation and Invoice posting if the limit would be exceeded.
+        - Warn: Shows a warning but allows the action.
+    - You can see "Credit Exposure" (current exposure) and "Credit Available" (remaining credit).
+- Save.
+
+3. What Happens When Limit is Exceeded?
+---------------------------------------
+- On Sales Order confirmation or Customer Invoice posting:
+    - If the limit would be exceeded, Odoo will block the action (if policy is Block) or show a warning (if Warn).
+    - Users in the "Credit Limit Manager" group can always bypass the block.
+
+4. Bypass Credit Limit (Manager)
+--------------------------------
+- Go to Settings > Users & Companies > Users.
+- Open the user.
+- Add them to the "Credit Limit Manager" group (under Accounting).
+- This user can confirm Sales/Invoices even if the limit is exceeded.
+
+5. Notes
+--------
+- Exposure = Receivables (unpaid invoices) + (optionally) uninvoiced confirmed sales.
+- A limit of 0 disables enforcement for that customer.
+- You can adjust limits and policies at any time.
+
+6. Troubleshooting
+------------------
+- If you see a view error after install, update the module and make sure there are no deprecated `attrs` or `states` attributes in the XML views.
+- If you need to change enforcement logic, see the Python files in the models/ folder.

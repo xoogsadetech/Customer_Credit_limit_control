@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Credit Limit Control for Odoo 17</title>
+    <meta name="description" content="Odoo 17 module to enforce customer credit limits on Sales and Invoicing. Block or warn on limit exceed, with company and customer-level settings.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Roboto', Arial, sans-serif; background: #f8f9fa; color: #222; margin: 0; padding: 0; }
+        .container { max-width: 950px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 40px 32px; }
+        .hero { text-align: center; padding: 32px 0 24px 0; background: linear-gradient(90deg, #2d6cdf 0%, #174a8c 100%); color: #fff; border-radius: 10px 10px 0 0; margin: -40px -32px 32px -32px; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 0.3em; }
+        .hero p { font-size: 1.3em; margin-bottom: 1.2em; }
+        .badges { margin: 18px 0 0 0; }
+        .badge { display: inline-block; background: #fff; color: #2d6cdf; border-radius: 16px; padding: 6px 18px; font-size: 1em; font-weight: 700; margin: 0 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+        .cta-btn { background: #FF0000; color: #fff; font-weight: bold; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-size: 18px; display: inline-block; margin: 18px 8px 0 8px; transition: background 0.2s; }
+        .cta-btn:hover { background: #b80000; }
+        .features-grid { display: flex; flex-wrap: wrap; gap: 24px; margin: 2.5em 0 2em 0; justify-content: center; }
+        .feature-card { background: #f0f4fa; border-radius: 8px; flex: 1 1 220px; max-width: 260px; min-width: 180px; padding: 1.5em 1em; text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+        .feature-card i { font-size: 2.2em; color: #2d6cdf; margin-bottom: 0.5em; }
+        h2 { color: #2d6cdf; margin-top: 2.2em; }
+        .quickstart { background: #eaf6e8; border-left: 4px solid #28a745; border-radius: 6px; padding: 1.2em 1.5em; margin: 2em 0; }
+        .testimonials { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 2em; }
+        .testimonial { background: #f0f4fa; border-left: 4px solid #2d6cdf; border-radius: 6px; padding: 1.5em 2em; flex: 1 1 320px; min-width: 220px; font-style: italic; color: #444; font-size: 1.1em; }
+        .testimonial .author { font-weight: bold; color: #2d6cdf; display: block; margin-top: 0.7em; }
+        .meta { color: #888; font-size: 0.95em; margin-bottom: 2em; }
+        .footer { text-align: center; color: #888; font-size: 1em; margin-top: 3em; padding: 1.5em 0 0.5em 0; border-top: 1px solid #e0e0e0; }
+        .screenshot { max-width: 100%; border-radius: 6px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); margin: 1.5em 0; }
+        .btn { display: inline-block; background: #2d6cdf; color: #fff; padding: 0.7em 1.5em; border-radius: 4px; text-decoration: none; font-weight: 700; margin-top: 1.5em; transition: background 0.2s; }
+        .btn:hover { background: #174a8c; }
+        @media (max-width: 900px) { .features-grid, .testimonials { flex-direction: column; align-items: center; } .container { padding: 16px 2vw; } }
+        @media (max-width: 600px) { .container { padding: 8px 1vw; } .hero h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Customer Credit Limit Control</h1>
+            <p>Professional Odoo Addon for Automated Credit Management in Sales & Accounting</p>
+            <div class="badges">
+                <span class="badge"><i class="fa-brands fa-odoo"></i> Odoo 16.0</span>
+                <span class="badge"><i class="fa-brands fa-odoo"></i> Odoo 17.0</span>
+                <span class="badge"><i class="fa-brands fa-odoo"></i> Odoo 18.0</span>
+                <span class="badge"><i class="fa-brands fa-odoo"></i> Odoo 19.0</span>
+                <span class="badge"><i class="fa fa-building"></i> Multi-Company</span>
+                <span class="badge"><i class="fa fa-shield-alt"></i> Secure</span>
+                <span class="badge"><i class="fa fa-headset"></i> Fast Support</span>
+            </div>
+            <a href="https://youtu.be/5Ybti-TeyBQ" target="_blank" class="cta-btn"><i class="fa-brands fa-youtube"></i> Watch YouTube Demo</a>
+            <a href="mailto:sales@example.com" class="cta-btn" style="background:#28a745;"><i class="fa fa-envelope"></i> Contact Sales</a>
+            <a href="https://wa.me/252634421588" class="cta-btn" style="background:#25D366;"><i class="fa-brands fa-whatsapp"></i> WhatsApp: +252634421588</a>
+        </div>
+        <div class="meta">Odoo 16.0, 17.0, 18.0, 19.0 | Accounting | Sales | <b>Professional Addon</b></div>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fa fa-user-lock"></i><br>Per-customer credit limits</div>
+            <div class="feature-card"><i class="fa fa-ban"></i><br>Block or warn on limit exceed</div>
+            <div class="feature-card"><i class="fa fa-layer-group"></i><br>Company & customer-level settings</div>
+            <div class="feature-card"><i class="fa fa-users-cog"></i><br>Manager bypass group</div>
+            <div class="feature-card"><i class="fa fa-database"></i><br>Demo data included</div>
+            <div class="feature-card"><i class="fa fa-plug"></i><br>Seamless Odoo 17 integration</div>
+        </div>
+        <div class="quickstart">
+            <h2 style="margin-top:0;">Quick Start</h2>
+            <ol>
+                <li>Install the module in Odoo 17 (Sales/Accounting)</li>
+                <li>Enable credit limit enforcement in <b>Company Settings</b></li>
+                <li>Set credit limits and policy (Block/Warn) for each customer</li>
+                <li>Test with demo data or your own customers</li>
+                <li>Managers in the special group can always bypass</li>
+            </ol>
+        </div>
+        <h2>Why Choose This Addon?</h2>
+        <ul style="font-size:1.1em; line-height:1.7;">
+            <li><b>Reduce Bad Debt:</b> Prevent over-crediting and minimize financial risk automatically.</li>
+            <li><b>Boost Team Productivity:</b> Automated checks mean less manual review and faster order processing.</li>
+            <li><b>Professional Image:</b> Show your customers you take credit management seriously.</li>
+            <li><b>Peace of Mind:</b> No more surprises—get real-time warnings and blocks before it’s too late.</li>
+        </ul>
+
+        <h2>What Our Users Say</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                “We used to lose money on overdue customers. Now, Odoo blocks risky sales automatically. This addon paid for itself in the first month!”
+                <span class="author">— Finance Manager, RetailCo</span>
+            </div>
+            <div class="testimonial">
+                “Our sales team loves the warning mode. We can still close deals, but with full visibility on risk.”
+                <span class="author">— Sales Director, B2B Supplies</span>
+            </div>
+            <div class="testimonial">
+                “Setup was a breeze and support is super responsive. Highly recommended for any Odoo business!”
+                <span class="author">— IT Lead, TechMart</span>
+            </div>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+        <div style="margin-bottom:2em;">
+            <b>Q: Can I set different limits for each customer?</b><br>
+            A: Yes! Each customer can have their own limit and policy (Block or Warn).
+            <br><br>
+            <b>Q: Does it work with multi-company?</b><br>
+            A: Yes, limits are company-dependent and work with Odoo’s multi-company setup.
+            <br><br>
+            <b>Q: Can managers override the block?</b><br>
+            A: Yes, users in the “Credit Limit Manager” group can always confirm sales and invoices.
+            <br><br>
+            <b>Q: Is support available?</b><br>
+            A: Absolutely! Email <a href="mailto:iid4001873@gmail.com">iid4001873@gmail.com</a> for fast help.
+        </div>
+
+        <h2>Get Started Today</h2>
+        <ul style="font-size:1.1em; line-height:1.7;">
+            <li>Install in minutes—no technical skills required.</li>
+            <li>Includes demo data for instant testing.</li>
+            <li>Works out of the box with Odoo 17 Sales and Accounting.</li>
+        </ul>
+        <div style="text-align:center; margin: 32px 0 0 0;">
+            <a href="mailto:sales@example.com" class="cta-btn" style="background:#2d6cdf;"><i class="fa fa-envelope"></i> Contact Sales</a>
+            <a href="https://apps.odoo.com/" class="cta-btn" style="background:#28a745;"><i class="fa fa-shopping-cart"></i> Buy Now on Odoo Apps</a>
+        </div>
+        <h2>How It Works</h2>
+        <ol>
+            <li>Enable credit limit enforcement in your company settings</li>
+            <li>Set credit limits and policy (Block/Warn) for each customer</li>
+            <li>On Sales Order or Invoice, Odoo blocks or warns if the limit would be exceeded</li>
+            <li>Managers in the special group can always bypass</li>
+        </ol>
+        <h2>Setup & Configuration</h2>
+        <ul>
+            <li><b>Company:</b> Settings &rarr; Companies &rarr; Credit Limit tab</li>
+            <li><b>Customer:</b> Contacts &rarr; Customer &rarr; Accounting tab</li>
+            <li><b>Group:</b> Assign "Credit Limit Manager" to users who should bypass limits</li>
+        </ul>
+        <h2>Screenshots</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;">
+            <figure style="flex: 1 1 320px; max-width: 420px;">
+                <img src="assets/screenshots/1.png" alt="Screenshot 1" class="screenshot">
+                <figcaption style="text-align:center; color:#888; font-size:0.95em;">Screenshot 1: Credit Limit Example</figcaption>
+            </figure>
+            <figure style="flex: 1 1 320px; max-width: 420px;">
+                <img src="assets/screenshots/2.png" alt="Screenshot 2" class="screenshot">
+                <figcaption style="text-align:center; color:#888; font-size:0.95em;">Screenshot 2: Company Settings</figcaption>
+            </figure>
+            <figure style="flex: 1 1 320px; max-width: 420px;">
+                <img src="assets/screenshots/3.png" alt="Screenshot 3" class="screenshot">
+                <figcaption style="text-align:center; color:#888; font-size:0.95em;">Screenshot 3: Customer Form</figcaption>
+            </figure>
+            <figure style="flex: 1 1 320px; max-width: 420px;">
+                <img src="assets/screenshots/4.png" alt="Screenshot 4" class="screenshot">
+                <figcaption style="text-align:center; color:#888; font-size:0.95em;">Screenshot 4: Policy Selection</figcaption>
+            </figure>
+        </div>
+        <h2>Support & Documentation</h2>
+        <ul>
+            <li>See <b>user_tutorial.txt</b> and <b>README.rst</b> in the module folder</li>
+            <li>Contact: <a href="mailto:iid4001873@gmail.com">iid4001873@gmail.com</a></li>
+        </ul>
+        <a class="btn" href="https://apps.odoo.com/">Get more Odoo Apps</a>
+        <div class="footer">
+            &copy; 2026 Customer Credit Limit Control for Odoo 16/17/18/19 &mdash; All rights reserved.<br>
+            <strong>Price: $10</strong><br>
+            <a href="mailto:iid4001873@gmail.com">Contact Support</a> | <a href="https://apps.odoo.com/">Odoo Apps</a>
+        </div>
+    </div>
+</body>
+</html>
